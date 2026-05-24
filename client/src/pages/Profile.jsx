@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { auth } from "../auth/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { getAuthHeaders } from "../utils/getAuthHeaders";
+import { getCurrentTier } from "../utils/rewardsUtils";
 import Navbar from "../components/Navbar";
 
 const API = import.meta.env.VITE_API_URL || "http://localhost:5000";
@@ -288,6 +289,7 @@ export default function Profile() {
     { id: "profile", label: "Personal Info" },
     { id: "addresses", label: "Addresses" },
     { id: "orders", label: "Orders" },
+    { id: "rewards", label: "FitRewards" },
   ];
 
   if (loading) return (
@@ -545,6 +547,88 @@ export default function Profile() {
           </div>
         )}
       </div>
+      {activeTab === "rewards" &&
+  (() => {
+    const points = 750;
+    const currentTier = getCurrentTier(points);
+
+    return (
+  <div className="bg-white border border-stone-200 rounded-2xl p-6">
+    <h2 className="text-xl font-semibold text-stone-900">
+      FitRewards
+    </h2>
+
+    <p className="text-stone-500 mt-2 mb-4">
+  Your loyalty rewards overview.
+</p>
+
+<div className="bg-stone-100 rounded-xl p-4">
+  <p className="text-sm text-stone-500">
+    Current Points
+  </p>
+
+  <h3 className="text-4xl font-bold text-stone-900 mt-2">
+    {points}
+  </h3>
+
+  <p className="mt-2 text-stone-700">
+    Tier: {currentTier.name}
+  </p>
+  <div className="mt-4">
+  <div className="w-full bg-stone-200 rounded-full h-3">
+    <div
+      className="bg-stone-900 h-3 rounded-full"
+      style={{ width: "75%" }}
+    />
+  </div>
+
+  <p className="text-xs text-stone-500 mt-2">
+    250 points away from Gold
+  </p>
+</div>
+<div className="mt-6">
+  <h3 className="text-lg font-semibold text-stone-900 mb-4">
+    Rewards Activity
+  </h3>
+
+  <div className="space-y-3">
+   {[
+  {
+    label: "Purchase Reward",
+    date: "2 days ago",
+    points: "+150 pts",
+  },
+  {
+    label: "Workout Bonus",
+    date: "Today",
+    points: "+50 pts",
+  },
+].map((item, index) => (
+  <div
+    key={index}
+    className="flex items-center justify-between border border-stone-200 rounded-xl p-3"
+  >
+    <div>
+      <p className="text-sm font-medium text-stone-900">
+        {item.label}
+      </p>
+
+      <p className="text-xs text-stone-500">
+        {item.date}
+      </p>
+    </div>
+
+    <p className="font-semibold text-stone-900">
+      {item.points}
+    </p>
+  </div>
+))}
+  </div>
+</div>
+</div>
+  </div>
+    );
+  })()}  
 
       {/* ── ADDRESS MODAL ── */}
       {editingAddress && (
