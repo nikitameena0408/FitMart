@@ -549,11 +549,6 @@ export default function Profile() {
       </div>
       {activeTab === "rewards" &&
   (() => {
-    const points = 750;
-const currentTier = getCurrentTier(points);
-
-const nextTierPoints = 1000;
-const progressPercentage = (points / nextTierPoints) * 100;
     const transactions = [
   {
     label: "Purchase Reward",
@@ -594,12 +589,12 @@ const progressPercentage = (points / nextTierPoints) * 100;
   <div className="w-full bg-stone-200 rounded-full h-3">
     <div
       className="bg-stone-900 h-3 rounded-full"
-      style={{ width: `${progressPercentage}%` }}
+      style={{ width: "75%" }}
     />
   </div>
 
   <p className="text-xs text-stone-500 mt-2">
-    {nextTierPoints - points} points away from Gold
+    250 points away from Gold
   </p>
 </div>
 <div className="mt-6">
