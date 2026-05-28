@@ -549,8 +549,19 @@ export default function Profile() {
       </div>
       {activeTab === "rewards" &&
   (() => {
-    const points = 750;
-    const currentTier = getCurrentTier(points);
+    const transactions = [
+  {
+    label: "Purchase Reward",
+    date: "2 days ago",
+    points: "+150 pts",
+  },
+  {
+    label: "Workout Bonus",
+    date: "Today",
+    points: "+50 pts",
+  },
+];
+    
 
     return (
   <div className="bg-white border border-stone-200 rounded-2xl p-6">
@@ -562,7 +573,7 @@ export default function Profile() {
   Your loyalty rewards overview.
 </p>
 
-<div className="bg-stone-100 rounded-xl p-4">
+<div className="bg-stone-100 rounded-xl p-4">-
   <p className="text-sm text-stone-500">
     Current Points
   </p>
@@ -592,38 +603,39 @@ export default function Profile() {
   </h3>
 
   <div className="space-y-3">
-   {[
-  {
-    label: "Purchase Reward",
-    date: "2 days ago",
-    points: "+150 pts",
-  },
-  {
-    label: "Workout Bonus",
-    date: "Today",
-    points: "+50 pts",
-  },
-].map((item, index) => (
-  <div
-    key={index}
-    className="flex items-center justify-between border border-stone-200 rounded-xl p-3"
-  >
-    <div>
-      <p className="text-sm font-medium text-stone-900">
-        {item.label}
+  {transactions.length === 0 ? (
+    <div className="border border-dashed border-stone-300 rounded-2xl p-6 text-center">
+      <p className="text-stone-700 font-medium">
+        No rewards activity yet
       </p>
 
-      <p className="text-xs text-stone-500">
-        {item.date}
+      <p className="text-sm text-stone-500 mt-2">
+        Make your first purchase or complete a workout to earn points.
       </p>
     </div>
+  ) : (
+    transactions.map((item, index) => (
+      <div
+        key={index}
+        className="flex items-center justify-between border border-stone-200 rounded-xl p-3"
+      >
+        <div>
+          <p className="text-sm font-medium text-stone-900">
+            {item.label}
+          </p>
 
-    <p className="font-semibold text-stone-900">
-      {item.points}
-    </p>
-  </div>
-))}
-  </div>
+          <p className="text-xs text-stone-500">
+            {item.date}
+          </p>
+        </div>
+
+        <p className="font-semibold text-stone-900">
+          {item.points}
+        </p>
+      </div>
+    ))
+  )}
+</div>
 </div>
 </div>
   </div>
